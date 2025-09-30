@@ -14,11 +14,11 @@ import Combine
 class NetworkManager: ObservableObject {
     @Published private(set) var targetURL: URL?
     
-    static let BASE_URL = "https://chickenspiceas.com/server"
+    static let spice_URL = "https://chickenspiceas.com/server"
     
     private let storage: UserDefaults
     private var didSaveURL = false
-    private let requestTimeout: TimeInterval = 10.0
+    private let requestTimeout: TimeInterval = 5.0
     
     init(storage: UserDefaults = .standard) {
         self.storage = storage
@@ -26,7 +26,7 @@ class NetworkManager: ObservableObject {
     }
     
     static func isInitialURL(_ url: URL) -> Bool {
-        guard let baseURL = URL(string: BASE_URL),
+        guard let baseURL = URL(string: spice_URL),
               url.host == baseURL.host,
               url.path == baseURL.path else {
             return false
@@ -35,8 +35,8 @@ class NetworkManager: ObservableObject {
     }
     
     static func getInitialURL(fcmToken: String) -> URL {
-        guard var components = URLComponents(string: BASE_URL) else {
-            fatalError("Invalid BASE_URL: \(BASE_URL)")
+        guard var components = URLComponents(string: spice_URL) else {
+            fatalError("Invalid BASE_URL: \(spice_URL)")
         }
         
         var queryItems = components.queryItems ?? []
@@ -51,8 +51,8 @@ class NetworkManager: ObservableObject {
     }
     
     static var initialURL: URL {
-        guard let url = URL(string: BASE_URL) else {
-            fatalError("Invalid BASE_URL: \(BASE_URL)")
+        guard let url = URL(string: spice_URL) else {
+            fatalError("Invalid BASE_URL: \(spice_URL)")
         }
         return url
     }

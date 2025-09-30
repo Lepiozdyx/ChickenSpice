@@ -17,9 +17,9 @@ struct RootView: View {
         Group {
             switch state.appState {
             case .fetch:
-                ProgressView()
+                loadScreen
                 
-            case .supp:
+            case .support:
                 if let url = state.webManager.targetURL {
                     WebViewManager(url: url, webManager: state.webManager)
                 } else if let fcmToken = fcmManager.fcmToken {
@@ -41,6 +41,27 @@ struct RootView: View {
         }
         .onAppear {
             state.stateCheck()
+        }
+    }
+    
+    private var loadScreen: some View {
+        ZStack {
+            Image("backStart")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                Image(.logoStart)
+                Spacer()
+                ProgressView()
+                    .scaleEffect(1.5)
+                Text("Please wait...")
+                    .foregroundStyle(.white)
+                    .padding(.bottom, 46)
+                    .font(.custom(.MontserratRegular, size: 18))
+            }
         }
     }
 }
